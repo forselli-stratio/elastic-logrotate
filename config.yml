@@ -1,0 +1,11 @@
+---
+# Remember, leave a key empty if there is no value.  None will be a string,
+# not a Python "NoneType"
+client:
+  hosts:
+    - coordinator.elasticsearchstratio.l4lb.thisdcos.directory
+  port: 9200
+  use_ssl: True
+  client_cert: elasticsearch.crt
+  client_key: elasticsearch.key
+  certificate: ca.crt

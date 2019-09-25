@@ -1,0 +1,13 @@
+---
+actions:
+  1:
+    action: rollover
+    description: >-
+      Rollover the index associated with alias 'aliasname', which should be in the
+      form of prefix-000001 (or similar), or prefix-YYYY.MM.DD-1.
+    options:
+      name: default
+      conditions:
+        max_age: 1d
+        max_docs: 5000000
+        max_size: 5gb
