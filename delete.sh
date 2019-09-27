@@ -2,7 +2,7 @@
 
 # Zero padded days using %d instead of %e
 DAYSAGO=`date --date="${DAYS_COUNT} days ago" +%Y%m%d`
-ALLLINES=`curl -s -k --cacert ./ca.crt --cert ./elasticlogrotate.crt --key ./elasticlogrotate.key -XGET "${ELASTIC_HOST}:${ELASTIC_PORT}/_cat/indices?v" | egrep ${INDEX_NAME}`
+ALLLINES=`curl -s -k --cacert ./ca.crt --cert ./elasticlogrotate.pem --key ./elasticlogrotate.key -XGET "${ELASTIC_HOST}:${ELASTIC_PORT}/_cat/indices?v" | egrep ${INDEX_NAME}`
 
 echo
 echo "THIS IS WHAT SHOULD BE DELETED FOR ELK:"
@@ -30,7 +30,7 @@ then
     if [ "$FORMATEDLINE" -lt "$DAYSAGO" ]
     then
       TODELETE=`echo $LINE | awk '{ print $3 }'`
-      /usr/bin/curl -XDELETE -k --cacert ./ca.crt --cert ./elasticlogrotate.crt --key ./elasticlogrotate.key $ELASTIC_HOST:$ELASTIC_PORT/$TODELETE
+      /usr/bin/curl -XDELETE -k --cacert ./ca.crt --cert ./elasticlogrotate.pem --key ./elasticlogrotate.key $ELASTIC_HOST:$ELASTIC_PORT/$TODELETE
       sleep 1
       fi
   done
