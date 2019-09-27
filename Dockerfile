@@ -3,6 +3,8 @@ FROM bobrik/curator:latest
 USER root
 ADD delete.sh /
 ADD rollover.sh /
+ADD kms_utils.sh /
+ADD b-log.sh /
 
 RUN apk update && \
     apk --no-cache add bash curl openssl vim strace && \ 
