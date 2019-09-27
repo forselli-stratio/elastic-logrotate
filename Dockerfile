@@ -1,13 +1,13 @@
 FROM bobrik/curator:latest
 
 USER root
-ADD curator /bin/curator
-ADD delete.yml /delete.yml
-ADD rollover.yml /rollover.yml
-ADD entrypoint.sh /entrypoint.sh
+ADD delete.sh /
+ADD rollover.sh /
 
 RUN apk update && \
     apk --no-cache add bash curl openssl vim strace && \ 
-    chmod +x /entrypoint.sh
+    chmod +x /entrypoint.sh && \
+    chmod +x /delete.sh && \
+    chmod +x rollover.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]

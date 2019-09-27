@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Zero padded days using %d instead of %e
-DAYSAGO=`date --date="10 min ago" +%Y%m%d`
-ALLLINES=`curl -s -k --cacert ./ca.crt --cert ./elasticlogrotate.crt --key ./elasticlogrotate.key -XGET "https://coordinator.elasticsearchstratio.l4lb.thisdcos.directory:9200/_cat/indices?v" | egrep default`
+DAYSAGO=`date --date="${DAYS_COUNT} days ago" +%Y%m%d`
+ALLLINES=`curl -s -k --cacert ./ca.crt --cert ./elasticlogrotate.crt --key ./elasticlogrotate.key -XGET "${ELASTIC_HOST}:${ELASTIC_PORT}/_cat/indices?v" | egrep ${INDEX_NAME}`
 
 echo
 echo "THIS IS WHAT SHOULD BE DELETED FOR ELK:"
@@ -14,13 +14,14 @@ do
   if [ "$FORMATEDLINE" -lt "$DAYSAGO" ]
   then
     TODELETE=`echo $LINE | awk '{ print $3 }'`
-    echo "https://coordinator.elasticsearchstratio.l4lb.thisdcos.directory:9200/$TODELETE"
+    echo "$ELASTIC_HOST:$ELASTIC_PORT/$TODELETE"
   fi
 done
 
 echo
-echo -n "if this make sence, Y to continue N to exit [Y/N]:"
-read INPUT
+#echo -n "if this make sence, Y to continue N to exit [Y/N]:"
+#read INPUT
+INPUT=yes
 if [ "$INPUT" == "Y" ] || [ "$INPUT" == "y" ] || [ "$INPUT" == "yes" ] || [ "$INPUT" == "YES" ]
 then
   echo "$ALLLINES" | while read LINE
@@ -29,7 +30,7 @@ then
     if [ "$FORMATEDLINE" -lt "$DAYSAGO" ]
     then
       TODELETE=`echo $LINE | awk '{ print $3 }'`
-      /usr/bin/curl -XDELETE -k --cacert ./ca.crt --cert ./elasticlogrotate.crt --key ./elasticlogrotate.key https://coordinator.elasticsearchstratio.l4lb.thisdcos.directory:9200/$TODELETE
+      /usr/bin/curl -XDELETE -k --cacert ./ca.crt --cert ./elasticlogrotate.crt --key ./elasticlogrotate.key $ELASTIC_HOST:$ELASTIC_PORT/$TODELETE
       sleep 1
       fi
   done
