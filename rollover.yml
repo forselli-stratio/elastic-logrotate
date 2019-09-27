@@ -6,8 +6,8 @@ actions:
       Rollover the index associated with alias 'aliasname', which should be in the
       form of prefix-000001 (or similar), or prefix-YYYY.MM.DD-1.
     options:
-      name: default
+      name: $INDEX_NAME
       conditions:
-        max_age: 1d
-        max_docs: 5000000
-        max_size: 5gb
+        max_age: $MAX_AGE
+        max_docs: $MAX_DOCS
+        max_size: $MAX_SIZE
