@@ -35,15 +35,7 @@
       "network": "HOST"
     }
   },
-  "healthChecks": [
-    {
-      "protocol": "TCP",
-      "gracePeriodSeconds": 300,
-      "intervalSeconds": 60,
-      "timeoutSeconds": 20,
-      "maxConsecutiveFailures": 3
-    }
-  ],
+  "healthChecks": null,
   "readinessChecks": null,
   "dependencies": null,
   "upgradeStrategy": {
@@ -59,11 +51,6 @@
     }
   },
   "taskKillGracePeriodSeconds": null,
-  "portDefinitions": [
-    {
-      "protocol": "tcp",
-      "port": 10236
-    }
-  ],
+  "portDefinitions": null,
   "requirePorts": false
 }

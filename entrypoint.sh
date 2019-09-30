@@ -94,5 +94,3 @@ chmod +x /rollover.sh
 
 ./delete.sh &
 ./rollover.sh
-
-echo "Logrotate started"
