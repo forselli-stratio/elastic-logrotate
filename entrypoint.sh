@@ -87,3 +87,12 @@ getCert userland elasticlogrotate elasticlogrotate PEM /
 export CA_REST=$(/usr/bin/curl -s -f -k -L -XGET -H "X-Vault-Token:$VAULT_TOKEN" -H 'Content-type: application/json' "https://$VAULT_HOST:$VAULT_PORT/v1/ca-trust/certificates/ca")
 export CA=$(echo $MARATHON_REST jq -cMSr .data[])
 echo $CA | sed -e 's/-----BEGIN CERTIFICATE-----/-----BEGIN CERTIFICATE-----\n/g' -e 's/-----END CERTIFICATE-----/\n-----END CERTIFICATE-----/g' -e 's/-----END CERTIFICATE----------BEGIN CERTIFICATE-----/-----END CERTIFICATE-----\n-----BEGIN CERTIFICATE-----/g'> /ca.crt
+
+/bin/cat /tmp/rollover.sh.tmp | envsubst > /rollover.sh
+chmod +x /delete.sh
+chmod +x /rollover.sh
+
+./delete.sh &
+./rollover.sh 
+
+echo "Logrotate started"

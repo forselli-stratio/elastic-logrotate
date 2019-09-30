@@ -1,74 +1,69 @@
 {
-  "env": {
-"INDEX_NAME": "default",
-"VAULT_HOST": "vault.service.eos.dev.air.hospitales.sanitas.azure",
-"MAX_AGE": "1d",
-"MAX_DOCS": "10",
-"MAX_SIZE": "5gb",
-"ELASTIC_HOST": "https://coordinator.elasticsearchstratio.l4lb.thisdcos.directory",
-"ELASTIC_PORT": "9200",
-"DAYS_COUNT": "1"
-  },
+  "volumes": null,
   "id": "/elastic-logrotate",
-  "backoffFactor": 1.15,
+  "args": null,
+  "user": null,
+  "env": {
+    "VAULT_HOST": "vault.service.eos.dev.air.hospitales.sanitas.azure",
+    "ELASTIC_PORT": "9200",
+    "MAX_AGE_ROLLOVER": "1d",
+    "DAYS_COUNT_DELETE": "1",
+    "MAX_DOCS_ROLLOVER": "10",
+    "INDEX_NAME": "default",
+    "ROLLOVERSCRIPT_TIME": "3600",
+    "DELETESCRIPT_TIME": "86400",
+    "ELASTIC_HOST": "https://coordinator.elasticsearchstratio.l4lb.thisdcos.directory",
+    "MAX_SIZE_ROLLOVER": "5gb"
+  },
+  "instances": 1,
+  "cpus": 0.5,
+  "mem": 128,
+  "disk": 0,
+  "gpus": 0,
+  "executor": null,
+  "constraints": null,
+  "fetch": null,
+  "storeUrls": null,
   "backoffSeconds": 1,
+  "backoffFactor": 1.15,
+  "maxLaunchDelaySeconds": 3600,
   "container": {
-    "portMappings": [
-      {
-        "containerPort": 0,
-        "hostPort": 0,
-        "protocol": "tcp",
-        "servicePort": 10105,
-        "name": "default"
-      }
-    ],
-    "type": "DOCKER",
-    "volumes": [],
     "docker": {
-      "image": "master.mesos:5001/stratio/elastic-logrotate:test",
+      "image": "master.mesos:5001/stratio/elastic-logrotate:0.1",
       "forcePullImage": false,
       "privileged": false,
-      "parameters": []
+      "network": "HOST"
     }
   },
-  "cpus": 0.5,
-  "disk": 0,
   "healthChecks": [
     {
+      "protocol": "TCP",
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
-      "maxConsecutiveFailures": 3,
-      "portIndex": 0,
       "timeoutSeconds": 20,
-      "delaySeconds": 15,
-      "protocol": "TCP",
-      "ipProtocol": "IPv4"
+      "maxConsecutiveFailures": 3
     }
   ],
-  "instances": 1,
-  "maxLaunchDelaySeconds": 3600,
-  "mem": 128,
+  "readinessChecks": null,
+  "dependencies": null,
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 1,
+    "maximumOverCapacity": 1
+  },
+  "labels": null,
+  "acceptedResourceRoles": null,
+  "residency": null,
   "secrets": {
     "role": {
       "source": "open"
     }
   },
-  "gpus": 0,
-  "networks": [
+  "taskKillGracePeriodSeconds": null,
+  "portDefinitions": [
     {
-      "mode": "container/bridge"
+      "protocol": "tcp",
+      "port": 10236
     }
   ],
-  "requirePorts": false,
-  "upgradeStrategy": {
-    "maximumOverCapacity": 1,
-    "minimumHealthCapacity": 1
-  },
-  "killSelection": "YOUNGEST_FIRST",
-  "unreachableStrategy": {
-    "inactiveAfterSeconds": 0,
-    "expungeAfterSeconds": 0
-  },
-  "fetch": [],
-  "constraints": []
+  "requirePorts": false
 }
