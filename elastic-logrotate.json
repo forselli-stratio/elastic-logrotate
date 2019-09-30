@@ -48,6 +48,11 @@
   "instances": 1,
   "maxLaunchDelaySeconds": 3600,
   "mem": 128,
+  "secrets": {
+    "role": {
+      "source": "open"
+    }
+  },
   "gpus": 0,
   "networks": [
     {

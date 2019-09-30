@@ -70,12 +70,15 @@ function getPass() {
     if [[ $status_code == 200 ]];
     then
         data=$(echo "$rawdata" | jq -cMSr '.data')
-        while IFS='=' read -r key value
+        while read -r line
         do
+            key=$(echo $line | jq -r ".key")
+            value=$(echo $line | jq -r ".value")
             secret_map[$key]="$value"
-        done < <(echo "$data" | jq -r "to_entries|map(\"\(.key)=\(.value)\")|.[]")
+        done < <(echo "$data" | jq -rc "to_entries[]")
 
         underscore_instance=${instance//[.-]/_}
+        underscore_instance=${underscore_instance//[\/]/_}
         underscore_secret=${secret//[.-]/_}
         for key in "${!secret_map[@]}"
         do
@@ -245,7 +248,8 @@ function getCert() {
             P12|JKS)
                 p12_temp=$(mktemp -p /dev/shm)
                 getPass "$cluster" "$instance" keystore
-                underscore_instance=${instance//[-.]/_}
+                underscore_instance=${instance//[.-]/_}
+                underscore_instance=${underscore_instance//[\/]/_}
                 ptr_password="${underscore_instance^^}_KEYSTORE_PASS"
 
                 openssl pkcs12 -export \
@@ -439,7 +443,7 @@ function token_renewal() {
 #
 #
 function token_info() {
-	local accessor=$ACCESSOR_TOKEN
+    local accessor=$ACCESSOR_TOKEN
         result=$(_post_to_vault "v1/auth/token/lookup-accessor" \
                 "{\"accessor\":\"$accessor\"}")
         IFS=',' read -r status_code rawdata <<< "$result"
@@ -562,4 +566,3 @@ function key_substitution() {
     fi
     return 0
 }
-
