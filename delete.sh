@@ -6,7 +6,7 @@ do
   ALLLINES=`curl -s -k --cacert ./ca.crt --cert ./elasticlogrotate.pem --key ./elasticlogrotate.key -XGET "${ELASTIC_HOST}:${ELASTIC_PORT}/_cat/indices?v" | egrep ${INDEX_NAME}`
   
   echo
-  echo "THIS IS WHAT SHOULD BE DELETED FOR ELK:"
+  echo `date`" THIS IS WHAT SHOULD BE DELETED FOR ELK:"
   echo
   
   echo "$ALLLINES" | while read LINE
