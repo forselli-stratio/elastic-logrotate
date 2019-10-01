@@ -1,6 +1,6 @@
 {
   "volumes": null,
-  "id": "/elastic-logrotate",
+  "id": "/elastic-rollover",
   "args": null,
   "user": null,
   "env": {

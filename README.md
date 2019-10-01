@@ -1,7 +1,7 @@
 # Elastic-logrotate
 
 
-You need to create elasticlogrotate certificate in vault with name "elasticlogrotate". After that, deploy elastic-logrotate.json in DC/OS.
+You need to create elasticlogrotate certificate in vault with name "elasticlogrotate". After that, deploy elastic-rollover.json in DC/OS.
 
 | Variable | Definition |
 |-------------------|:--------------|
