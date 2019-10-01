@@ -1,11 +1,11 @@
 # Elastic-logrotate
 
 
-Create elasticlogrotate certificate.
+You need to create elasticlogrotate certificate in vault with name "elasticlogrotate". After that, deploy elastic-logrotate.json in DC/OS.
 
 | Variable | Definition |
 |-------------------|:--------------|
-| INDEX_NAME    | Name of the index you want to rotate/delete         |
+| INDEX_NAME    | Name of the index you want to rotate/delete (example "default")         |
 | MAX_AGE_ROLLOVER   | Rollover index with specified days old (example "1d")         |
 | MAX_DOCS   | Rollover index with specified docs (example "5000")         |
 | MAX_SIZE   | Rollover index with specified size (example "5gb")         |
