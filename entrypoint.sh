@@ -82,7 +82,7 @@ fi
 
 login_vault
 
-getCert userland elasticlogrotate elasticlogrotate PEM /
+getCert userland elasticrollover elasticrollover PEM /
 #
 export CA_REST=$(/usr/bin/curl -s -f -k -L -XGET -H "X-Vault-Token:$VAULT_TOKEN" -H 'Content-type: application/json' "https://$VAULT_HOST:$VAULT_PORT/v1/ca-trust/certificates/ca")
 export CA=$(echo $MARATHON_REST jq -cMSr .data[])
